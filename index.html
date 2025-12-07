@@ -1,35 +1,145 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>LLL HUB Key</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <style>
-    body{font-family:Arial,Helvetica,sans-serif;background:#0f1724;color:#e6eef8;display:flex;align-items:center;justify-content:center;height:100vh;margin:0}
-    .card{background:#0b1220;padding:28px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,.6);max-width:420px;text-align:center}
-    h1{margin:0 0 8px;font-size:20px}
-    p{margin:8px 0 16px;color:#bcd2e8}
-    .key{background:#071029;padding:12px;border-radius:6px;font-weight:700;letter-spacing:1px;color:#7fffd4}
-    .btn{display:inline-block;margin-top:14px;padding:10px 16px;border-radius:6px;background:#0ea5a2;color:#071029;text-decoration:none;font-weight:700}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>LLL HUB — Get Key</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0f17; --card:#071022; --accent:#7fead9; --accent-2:#8b5cf6; --muted:#9fb6c9;
+    --glass: rgba(255,255,255,0.03);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(180deg,#05060a 0%, #071022 100%);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+  .wrap{width:100%;max-width:820px;padding:28px}
+  .card{background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border-radius:18px;padding:28px;box-shadow:0 10px 40px rgba(2,6,23,0.6); border:1px solid rgba(255,255,255,0.03)}
+  header{display:flex;gap:16px;align-items:center}
+  .avatar{width:84px;height:84px;border-radius:12px;overflow:hidden;flex:0 0 84px;background:linear-gradient(135deg,var(--accent-2),#3b82f6);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:22px}
+  h1{margin:0;font-size:20px;color:#e6f6f2}
+  p.lead{margin:6px 0 14px;color:var(--muted);font-size:14px}
+  .key-box{margin-top:18px;display:flex;gap:12px;align-items:center}
+  .key{flex:1;background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);font-weight:700;color:var(--accent);letter-spacing:1px;display:flex;align-items:center;justify-content:center;font-size:18px;min-height:52px;transition:transform .18s ease, box-shadow .18s}
+  .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;padding:12px 16px;border-radius:12px;color:#041018;font-weight:700;cursor:pointer;box-shadow:0 8px 30px rgba(123,232,207,0.12);transition:transform .12s ease}
+  .btn:active{transform:translateY(2px)}
+  .small{font-size:13px;color:var(--muted);margin-top:10px}
+  .hint{margin-top:10px;color:var(--muted);display:flex;align-items:center;gap:10px;font-size:13px}
+  .loader{width:18px;height:18px;border-radius:50%;border:2px solid rgba(255,255,255,0.05);border-top-color:var(--accent);animation:spin 1s linear infinite;display:inline-block}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* nice floating bg */
+  .bg-blob{position:fixed;right:-10vw;top:-10vh;width:60vw;height:60vw;filter:blur(60px);opacity:.28;background:linear-gradient(45deg,var(--accent),var(--accent-2));transform:rotate(15deg);z-index:0;border-radius:32%}
+  .footer{margin-top:18px;color:var(--muted);font-size:13px;display:flex;gap:14px;align-items:center}
+  .copy-ok{color:#8ef0d6;font-weight:700}
+  .fade-in{animation:fadeIn .28s ease both}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none}}
+  @media (max-width:540px){.wrap{padding:18px}.avatar{width:64px;height:64px}}
+</style>
 </head>
 <body>
-  <div class="card">
-    <h1>LLL HUB — Key</h1>
-    <p>ขอบคุณที่สนับสนุน! คัดลอกคีย์ด้านล่างแล้วกลับไปที่เกม</p>
-    <div id="key" class="key">lllhub-key-2025</div>
-    <a class="btn" id="copyBtn" href="#">คัดลอกคีย์</a>
-    <p style="margin-top:10px;font-size:12px;color:#99b6c8">ถ้าไม่เห็นคีย์ ติดต่อ Discord:1x_za</p>
-  </div>
+<div class="bg-blob" aria-hidden></div>
+<div class="wrap">
+  <div class="card fade-in" id="card">
+    <header>
+      <div class="avatar" id="avatar">III</div>
+      <div style="flex:1">
+        <h1>LLL HUB — Key System</h1>
+        <p class="lead">Complete the quick step to get your temporary key. Key valid for 24 hours.</p>
+      </div>
+    </header>
 
-  <script>
-    document.getElementById('copyBtn').addEventListener('click', function(e){
-      e.preventDefault();
-      const text = document.getElementById('key').innerText;
-      navigator.clipboard.writeText(text).then(function(){
-        alert('คัดลอกคีย์แล้ว: ' + text);
-      }, function(){ alert('ไม่สามารถคัดลอกอัตโนมัติ — คัดลอกด้วยมือได้'); });
-    });
-  </script>
+    <div style="margin-top:14px">
+      <div style="display:flex;gap:10px;align-items:center">
+        <button id="getBtn" class="btn" style="flex:0 0 auto">Get Key</button>
+        <div style="flex:1"></div>
+      </div>
+
+      <div class="key-box">
+        <div id="key" class="key">— Click "Get Key" —</div>
+        <button id="copyBtn" class="btn">Copy</button>
+      </div>
+
+      <div class="small">After finishing the task, click <strong>Get Key</strong>. If it fails, try again or contact support.</div>
+
+      <div class="hint">
+        <span class="loader" id="miniLoader" style="display:none"></span>
+        <span id="status" style="color:var(--muted)">Powered by LootLabs • Key expires in 24h</span>
+      </div>
+
+      <div class="footer">
+        <div>Need help? Join our Discord</div>
+        <div style="margin-left:auto;color:var(--muted)">© LLL HUB</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // CONFIG - set this to your API base (the server you'll deploy)
+  const API_BASE = "https://YOUR-SERVER-DOMAIN.com"; // <<== change this to your server domain (https)
+
+  const getBtn = document.getElementById('getBtn');
+  const keyBox = document.getElementById('key');
+  const copyBtn = document.getElementById('copyBtn');
+  const miniLoader = document.getElementById('miniLoader');
+  const status = document.getElementById('status');
+  let lastKey = null;
+
+  async function setLoading(on){
+    miniLoader.style.display = on ? 'inline-block' : 'none';
+    getBtn.disabled = on;
+    copyBtn.disabled = on;
+  }
+
+  async function fetchKey(){
+    try{
+      setLoading(true);
+      const res = await fetch(API_BASE + "/generate", {method:'POST'});
+      if(!res.ok) throw new Error("Server returned " + res.status);
+      const j = await res.json();
+      if(j.key){
+        lastKey = j.key;
+        keyBox.textContent = j.key;
+        status.textContent = "Key generated — valid 24 hours";
+        keyBox.style.transform = "scale(1.02)";
+        setTimeout(()=> keyBox.style.transform = "", 200);
+      }else{
+        keyBox.textContent = "Failed to generate key";
+      }
+    }catch(err){
+      console.error(err);
+      keyBox.textContent = "Error generating key. Try again";
+      status.textContent = "Error: " + err.message;
+    }finally{
+      setLoading(false);
+    }
+  }
+
+  getBtn.addEventListener('click', async ()=>{
+    // open lootlabs link in new tab first (recommended)
+    window.open("https://lootlabs.gg/YOUR_LOOT_LINK", "_blank"); // instruct user to complete task
+    // small delay then try to get key
+    await new Promise(r=>setTimeout(r, 1500));
+    await fetchKey();
+  });
+
+  copyBtn.addEventListener('click', async ()=>{
+    if(!lastKey) return;
+    try{
+      await navigator.clipboard.writeText(lastKey);
+      status.textContent = "Copied to clipboard";
+      status.classList.add('copy-ok');
+      setTimeout(()=>{ status.classList.remove('copy-ok'); status.textContent = "Key generated — valid 24 hours"; }, 2000);
+    }catch(e){
+      alert("Copy failed — copy manually: " + lastKey);
+    }
+  });
+
+  // Optionally auto-fetch if ?auto=1 param present
+  (function(){
+    const url = new URL(location.href);
+    if(url.searchParams.get('auto') === '1') fetchKey();
+  })();
+</script>
 </body>
 </html>
