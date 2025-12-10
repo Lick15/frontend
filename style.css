@@ -1,76 +1,110 @@
 body {
     margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #0A0014, #260040);
-    font-family: 'Arial', sans-serif;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1a002c, #15001f);
     color: white;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
 }
 
 .container {
-    text-align: center;
-    animation: fadeIn 1s ease;
+    margin-top: 50px;
 }
 
 .logo {
-    width: 120px;
-    margin-bottom: 10px;
-    animation: pop 0.6s ease;
+    width: 150px;
+    margin-bottom: 20px;
 }
 
 .title {
-    font-size: 2.5rem;
-    margin: 5px 0;
+    font-size: 48px;
+    font-weight: bold;
 }
 
 .subtitle {
-    font-size: 1.1rem;
-    margin-bottom: 25px;
-    opacity: 0.85;
+    margin-top: -10px;
+    font-size: 18px;
+    opacity: 0.8;
 }
 
 .btn {
-    padding: 12px 25px;
-    background: #7e2eff;
+    margin-top: 30px;
+    padding: 15px 40px;
+    font-size: 22px;
     border: none;
     border-radius: 8px;
+    background: #a855f7;
     color: white;
-    font-size: 1.1rem;
     cursor: pointer;
-    transition: 0.3s;
+    transition: transform 0.15s ease;
 }
 
-.btn:hover {
-    background: #a868ff;
-    transform: scale(1.05);
+.btn:active {
+    transform: scale(0.92);
 }
 
-#copied {
-    margin-top: 15px;
-    color: #77ff8a;
-    font-size: 1rem;
+.footer {
+    margin-top: 40px;
+    opacity: 0.5;
+}
+
+/* SCRIPT BOX */
+.script-box {
+    margin-top: 30px;
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 10px;
 }
 
 .hidden {
     display: none;
 }
 
-footer {
-    margin-top: 40px;
-    font-size: 0.8rem;
-    opacity: 0.4;
+textarea {
+    width: 100%;
+    height: 120px;
+    background: #0f0017;
+    color: #fff;
+    border: 1px solid #a855f7;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
 }
 
-/* animations */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+/* COPY BUTTON */
+.copyBtn {
+    margin-top: 10px;
+    padding: 10px 30px;
+    background: #9333ea;
+    border: none;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 18px;
+    transition: transform .15s;
 }
 
-@keyframes pop {
-    0% { transform: scale(0.3); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
+.copyBtn:active {
+    transform: scale(0.9);
+}
+
+/* POPUP */
+.popup {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #9333ea;
+    padding: 10px 25px;
+    border-radius: 20px;
+    font-size: 18px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.popup.show {
+    opacity: 1;
 }
