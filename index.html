@@ -8,24 +8,24 @@
 </head>
 <body>
 
-    <div class="popup" id="popup">✔ Script Copied!</div>
+    <div id="toast">Copied!</div>
 
     <div class="container">
 
         <img src="public/logo.png" class="logo" alt="III HUB Logo">
 
         <h1 class="title">III HUB</h1>
-        <p class="subtitle">Get your script instantly</p>
+        <p class="subtitle">Get your script after verification</p>
 
-        <button class="btn" id="getScriptBtn">
-            Get Script
-        </button>
+        <button class="btn" id="getScriptBtn">Get Script</button>
 
-        <div class="script-box">
-            <p class="script-title">Copy Code Below</p>
+        <!-- Hidden until verified -->
+        <div id="scriptBox" class="hidden">
             <textarea id="scriptText" readonly>
-loadstring(game:HttpGet("https://raw.githubusercontent.com/Lick15/lll-hub.github.io/refs/heads/main/Pickaxe%20Simulator.lua"))()
+loadstring(game:HttpGet("https://your-backend-link/getscript"))()
             </textarea>
+
+            <button class="copyBtn" id="copyBtn">Copy Script</button>
         </div>
 
         <p class="footer">Powered by III HUB</p>
