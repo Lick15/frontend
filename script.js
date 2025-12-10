@@ -1,16 +1,21 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const btn = document.getElementById("getScriptBtn");
-    const popup = document.getElementById("popup");
-    const scriptText = document.getElementById("scriptText");
+// --------- (2) ตรวจว่ามาจาก LootLabs หรือไม่ ---------
+const urlParams = new URLSearchParams(window.location.search);
+const verified = urlParams.get("verified");
 
-    btn.addEventListener("click", () => {
-        scriptText.select();
-        document.execCommand("copy");
+const box = document.getElementById("scriptBox");
 
-        popup.classList.add("show");
+if (verified === "1") {
+    box.classList.remove("hidden");
+} else {
+    window.location.href = "https://lootdest.org/s?Z0UxfDhS"; // เปลี่ยนเป็นลิงค์ของคุณ
+}
 
-        setTimeout(() => {
-            popup.classList.remove("show");
-        }, 2000);
-    });
-});
+
+// --------- (11) Copy Script with Animation + Toast ---------
+
+const toast = document.getElementById("toast");
+const copyBtn = document.getElementById("copyBtn");
+
+copyBtn.addEventListener("click", () => {
+
+    const scriptText =
