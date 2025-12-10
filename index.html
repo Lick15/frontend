@@ -1,36 +1,101 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>III HUB | Script Access</title>
-    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Script Copier</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #111;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 360px;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            text-align: center;
+        }
+
+        textarea {
+            width: 100%;
+            height: 140px;
+            border-radius: 10px;
+            border: none;
+            padding: 12px;
+            font-size: 14px;
+            background: #000;
+            color: #0f0;
+            resize: none;
+        }
+
+        button {
+            margin-top: 15px;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 10px;
+            background: #4CAF50;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.15s ease, background 0.15s ease;
+        }
+
+        button:active {
+            transform: scale(0.95);
+            background: #3e8e41;
+        }
+
+        .popup {
+            opacity: 0;
+            background: #4CAF50;
+            padding: 10px 20px;
+            border-radius: 8px;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transition: opacity 0.3s ease;
+        }
+
+        .popup.show {
+            opacity: 1;
+        }
+    </style>
 </head>
 <body>
 
-    <div id="toast">Copied!</div>
+    <div class="popup" id="popup">Copied!</div>
 
     <div class="container">
+        <textarea id="scriptBox" readonly>loadstring(game:HttpGet("YOUR_SCRIPT_LINK_HERE"))()</textarea>
 
-        <img src="public/logo.png" class="logo" alt="III HUB Logo">
-
-        <h1 class="title">III HUB</h1>
-        <p class="subtitle">Get your script after verification</p>
-
-        <button class="btn" id="getScriptBtn">Get Script</button>
-
-        <!-- Hidden until verified -->
-        <div id="scriptBox" class="hidden">
-            <textarea id="scriptText" readonly>
-loadstring(game:HttpGet("https://your-backend-link/getscript"))()
-            </textarea>
-
-            <button class="copyBtn" id="copyBtn">Copy Script</button>
-        </div>
-
-        <p class="footer">Powered by III HUB</p>
+        <!-- ปุ่มใหม่: อยู่ล่างกล่องข้อความ และกดทีเดียวก็อปเลย -->
+        <button id="copyBtn">Get Script</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const btn = document.getElementById("copyBtn");
+        const box = document.getElementById("scriptBox");
+        const popup = document.getElementById("popup");
+
+        btn.addEventListener("click", () => {
+            navigator.clipboard.writeText(box.value).then(() => {
+                popup.classList.add("show");
+
+                setTimeout(() => {
+                    popup.classList.remove("show");
+                }, 1500);
+            });
+        });
+    </script>
+
 </body>
 </html>
