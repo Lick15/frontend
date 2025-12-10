@@ -1,12 +1,19 @@
+document.getElementById("getScriptBtn").addEventListener("click", () => {
+    const box = document.getElementById("scriptBox");
+    box.classList.remove("hidden");
+});
+
 document.getElementById("copyBtn").addEventListener("click", () => {
+    const text = document.getElementById("scriptText");
 
-    const script = `loadstring(game:HttpGet("https://raw.githubusercontent.com/Lick15/lll-hub/main/Pickaxe%20Simulator.lua"))()`;
+    text.select();
+    text.setSelectionRange(0, 99999);
 
-    navigator.clipboard.writeText(script).then(() => {
-        document.getElementById("copied").classList.remove("hidden");
+    navigator.clipboard.writeText(text.value);
 
-        setTimeout(() => {
-            document.getElementById("copied").classList.add("hidden");
-        }, 2000);
-    });
+    // SHOW POPUP
+    const popup = document.getElementById("copiedPopup");
+    popup.classList.add("show");
+
+    setTimeout(() => popup.classList.remove("show"), 1500);
 });
