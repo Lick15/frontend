@@ -1,19 +1,16 @@
-document.getElementById("getScriptBtn").addEventListener("click", () => {
-    const box = document.getElementById("scriptBox");
-    box.classList.remove("hidden");
-});
+document.addEventListener("DOMContentLoaded", () => {
+    const btn = document.getElementById("getScriptBtn");
+    const popup = document.getElementById("popup");
+    const scriptText = document.getElementById("scriptText");
 
-document.getElementById("copyBtn").addEventListener("click", () => {
-    const text = document.getElementById("scriptText");
+    btn.addEventListener("click", () => {
+        scriptText.select();
+        document.execCommand("copy");
 
-    text.select();
-    text.setSelectionRange(0, 99999);
+        popup.classList.add("show");
 
-    navigator.clipboard.writeText(text.value);
-
-    // SHOW POPUP
-    const popup = document.getElementById("copiedPopup");
-    popup.classList.add("show");
-
-    setTimeout(() => popup.classList.remove("show"), 1500);
+        setTimeout(() => {
+            popup.classList.remove("show");
+        }, 2000);
+    });
 });
