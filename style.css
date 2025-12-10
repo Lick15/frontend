@@ -1,111 +1,105 @@
 body {
     margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: #0c0c0f;
+    padding: 0;
+    background: linear-gradient(135deg, #1a0033, #330066, #1a0033);
+    background-size: 300% 300%;
+    animation: bgMove 12s ease infinite;
+    font-family: Arial, sans-serif;
     color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    text-align: center;
+}
+
+@keyframes bgMove {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
 .container {
-    text-align: center;
-    animation: fadeIn 0.6s ease-in-out;
+    margin-top: 50px;
+    padding: 20px;
 }
 
 .logo {
     width: 140px;
-    margin-bottom: 15px;
+    animation: pulse 3s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1);}
+    50% { transform: scale(1.05);}
+    100% { transform: scale(1);}
 }
 
 .title {
-    font-size: 40px;
-    font-weight: 700;
-    background: linear-gradient(45deg, #a855f7, #6b21a8);
-    -webkit-background-clip: text;
-    color: transparent;
-    margin-bottom: 10px;
+    font-size: 32px;
+    margin-top: 10px;
 }
 
 .subtitle {
-    color: #b3b3b3;
-    margin-bottom: 25px;
-    font-size: 15px;
+    opacity: 0.8;
+    margin-bottom: 20px;
 }
 
-.btn {
-    background: #8b5cf6;
-    border: none;
-    padding: 15px 45px;
-    border-radius: 10px;
-    color: white;
+.btn, .copyBtn {
+    padding: 14px 26px;
     font-size: 18px;
-    font-weight: 600;
+    border: none;
+    color: white;
+    background: #6611cc;
+    border-radius: 8px;
     cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    position: relative;
+    overflow: hidden;
+    transition: 0.2s ease;
 }
 
-.btn:active {
-    transform: scale(0.92);
-    box-shadow: 0 0 15px #a855f7;
+.btn:hover, .copyBtn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 12px #9933ff;
 }
 
-.script-box {
-    margin-top: 25px;
-    background: #1a1a1e;
-    padding: 15px;
-    border-radius: 12px;
-    width: 330px;
-    margin-left: auto;
-    margin-right: auto;
-    box-shadow: 0 0 15px rgba(168, 85, 247, 0.2);
-}
-
-.script-title {
-    font-size: 15px;
-    color: #c084fc;
-    margin-bottom: 8px;
+.btn:active, .copyBtn:active {
+    transform: scale(0.95);
 }
 
 textarea {
-    width: 100%;
-    height: 90px;
+    width: 90%;
+    height: 140px;
+    margin-top: 20px;
+    border-radius: 10px;
+    padding: 12px;
     border: none;
     outline: none;
-    background: #111113;
-    color: #d1d5db;
-    padding: 10px;
-    font-size: 13px;
-    border-radius: 8px;
+    background: rgba(255,255,255,0.1);
+    color: white;
     resize: none;
+    backdrop-filter: blur(5px);
 }
 
-.footer {
-    margin-top: 25px;
-    font-size: 12px;
-    color: #6b7280;
-}
+.hidden { display: none; }
 
-.popup {
+/* Toast */
+#toast {
     position: fixed;
     top: 20px;
-    right: -300px;
-    background: #22c55e;
-    padding: 12px 22px;
+    right: -200px;
+    background: #00dd88;
+    color: black;
+    padding: 12px 20px;
     border-radius: 8px;
-    color: white;
-    font-weight: 600;
-    font-size: 15px;
-    transition: right 0.4s ease;
-    box-shadow: 0 0 10px rgba(34,197,94,0.7);
+    font-weight: bold;
+    transition: 0.5s;
+    z-index: 999;
 }
 
-.popup.show {
-    right: 20px;
+.showToast {
+    right: 20px !important;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+/* Mobile optimization */
+@media (max-width: 600px) {
+    .title { font-size: 26px; }
+    .btn, .copyBtn { width: 90%; font-size: 16px; }
+    textarea { height: 120px; }
 }
