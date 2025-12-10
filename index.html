@@ -1,36 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>III HUB | Script Access</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
+    <div class="popup" id="popup">✔ Script Copied!</div>
 
     <div class="container">
 
         <img src="public/logo.png" class="logo" alt="III HUB Logo">
 
         <h1 class="title">III HUB</h1>
-        <p class="subtitle">Access your script after completing LootLabs</p>
+        <p class="subtitle">Get your script instantly</p>
 
         <button class="btn" id="getScriptBtn">
             Get Script
         </button>
 
-        <!-- SCRIPT BOX (แสดงหลังทำ LootLabs เสร็จ) -->
-        <div id="scriptBox" class="script-box hidden">
-            <p class="script-title">Your Script:</p>
-            <textarea id="scriptText" readonly>loadstring(game:HttpGet("https://yourdomain.com/script.lua"))()</textarea>
-            <button class="copyBtn" id="copyBtn">Copy Script</button>
+        <div class="script-box">
+            <p class="script-title">Copy Code Below</p>
+            <textarea id="scriptText" readonly>
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Lick15/lll-hub.github.io/refs/heads/main/Pickaxe%20Simulator.lua"))()
+            </textarea>
         </div>
 
         <p class="footer">Powered by III HUB</p>
-
-        <!-- COPY POPUP -->
-        <div id="copiedPopup" class="popup hidden">Copied!</div>
-
     </div>
 
     <script src="script.js"></script>
