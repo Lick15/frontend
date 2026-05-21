@@ -1,101 +1,282 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Script Copier</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #111;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>คำคมคนอกหัก 💔</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Sarabun:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            width: 360px;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #050508; /* ปรับพื้นหลังให้มืดสนิทขึ้น */
+      font-family: 'Sarabun', sans-serif;
+      overflow: hidden;
+      cursor: default;
+    }
 
-        textarea {
-            width: 100%;
-            height: 140px;
-            border-radius: 10px;
-            border: none;
-            padding: 12px;
-            font-size: 14px;
-            background: #000;
-            color: #0f0;
-            resize: none;
-        }
+    /* Floating broken hearts & rain background */
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-        button {
-            margin-top: 15px;
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 10px;
-            background: #4CAF50;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.15s ease, background 0.15s ease;
-        }
+    .heart-particle {
+      position: absolute;
+      font-size: 1.2rem;
+      opacity: 0;
+      animation: floatDown linear infinite; /* เปลี่ยนเป็นลอยดิ่งลงมาเหมือนสายฝน */
+    }
 
-        button:active {
-            transform: scale(0.95);
-            background: #3e8e41;
-        }
+    @keyframes floatDown {
+      0%   { transform: translateY(-10vh) scale(0.8) rotate(0deg); opacity: 0; }
+      10%  { opacity: 0.3; }
+      90%  { opacity: 0.1; }
+      100% { transform: translateY(100vh) scale(1) rotate(-20deg); opacity: 0; }
+    }
 
-        .popup {
-            opacity: 0;
-            background: #4CAF50;
-            padding: 10px 20px;
-            border-radius: 8px;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            transition: opacity 0.3s ease;
-        }
+    /* Glow orbs - ปรับสีเป็นโทนฟ้าน้ำเงินเหงาๆ */
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+      animation: pulse 6s ease-in-out infinite alternate;
+    }
+    .orb1 { width: 400px; height: 400px; background: rgba(30, 100, 220, 0.1); top: -100px; left: -100px; }
+    .orb2 { width: 300px; height: 300px; background: rgba(70, 80, 120, 0.08); bottom: -50px; right: -50px; animation-delay: 2s; }
+    .orb3 { width: 200px; height: 200px; background: rgba(100, 150, 255, 0.05); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 4s; }
 
-        .popup.show {
-            opacity: 1;
-        }
-    </style>
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to   { transform: scale(1.2); }
+    }
+
+    /* Main card */
+    .card {
+      position: relative;
+      z-index: 10;
+      width: min(85vw, 500px);
+      background: rgba(255,255,255,0.02); /* ปรับให้ใสขึ้น ดูอ้างว้าง */
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 24px;
+      padding: 48px 40px;
+      text-align: center;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 0 60px rgba(0, 0, 0, 0.6);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: 24px;
+      padding: 1px;
+      /* เส้นขอบไล่สีเทา-น้ำเงินแบบหม่นๆ */
+      background: linear-gradient(135deg, rgba(100,150,255,0.2), transparent, rgba(255,255,255,0.1));
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+
+    .icon {
+      font-size: 2.5rem;
+      margin-bottom: 24px;
+      display: block;
+      animation: breakheart 3s ease-in-out infinite; /* เปลี่ยนจังหวะการเต้นเป็นแบบโรยรา */
+    }
+
+    @keyframes breakheart {
+      0%, 100% { transform: scale(1) rotate(0deg); }
+      50% { transform: scale(0.95) rotate(-5deg); opacity: 0.8; }
+    }
+
+    .quote-wrap {
+      min-height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+    }
+
+    .quote {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1rem, 3.5vw, 1.25rem);
+      font-style: italic;
+      color: #d1d5db; /* สีข้อความเทาขาวหม่น */
+      line-height: 1.8;
+      letter-spacing: 0.01em;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .quote.fade-out {
+      opacity: 0;
+      transform: translateY(12px); /* เปลี่ยนทิศทางร่วงลง */
+    }
+
+    .quote.fade-in {
+      animation: fadeIn 0.6s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(100,150,255,0.4), transparent);
+      margin: 0 auto 24px;
+    }
+
+    .counter {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.1em;
+      margin-bottom: 32px;
+      text-transform: uppercase;
+    }
+
+    .btn {
+      /* ปุ่มสีเทาเข้ม-น้ำเงินหม่น */
+      background: linear-gradient(135deg, #2c3e50, #1a252f);
+      color: #94a3b8;
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 14px 36px;
+      border-radius: 50px;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 1rem;
+      font-weight: 400;
+      cursor: pointer;
+      letter-spacing: 0.05em;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(255,255,255,0.05);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .btn:hover { 
+      transform: translateY(-1px); 
+      color: #fff;
+      box-shadow: 0 4px 25px rgba(100,150,255,0.15); 
+    }
+    .btn:hover::after { opacity: 1; }
+    .btn:active { transform: scale(0.98); }
+
+    .title {
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(148, 163, 184, 0.6);
+      margin-bottom: 8px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="popup" id="popup">Copied!</div>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+  <div class="hearts-bg" id="heartsBg"></div>
 
-    <div class="container">
-        <textarea id="scriptBox" readonly>loadstring(game:HttpGet("https://raw.githubusercontent.com/Lick15/lll-hub.github.io/refs/heads/main/Pickaxe%20Simulator.lua"))()</textarea>
-
-        <!-- ปุ่มใหม่: อยู่ล่างกล่องข้อความ และกดทีเดียวก็อปเลย -->
-        <button id="copyBtn">Get Script</button>
+  <div class="card">
+    <p class="title">พื้นที่คนอกหัก</p>
+    <span class="icon">💔</span>
+    <div class="divider"></div>
+    <div class="quote-wrap">
+      <p class="quote" id="quote"></p>
     </div>
+    <p class="counter" id="counter"></p>
+    <button class="btn" onclick="newQuote()">🖤 สุ่มความช้ำ</button>
+  </div>
 
-    <script>
-        const btn = document.getElementById("copyBtn");
-        const box = document.getElementById("scriptBox");
-        const popup = document.getElementById("popup");
+  <script>
+    // รายชื่อคำคมคนอกหักแบบเจ็บๆ
+    const quotes = [
+      "บางครั้งการรักษาพยาบาลที่ดีที่สุด คือการยอมรับว่าเขาไม่ได้รักเราแล้ว",
+      "เจ็บกว่าการเป็นคนไม่มีสิทธิ์ คือการเคยมีสิทธิ์แต่รักษาไว้ไม่ได้",
+      "เราเป็นเพียงแค่หนึ่งหน้ากระดาษในหนังสือเล่มโปรดของเขา แต่เขาคือหนังสือทั้งเล่มของเรา",
+      "ความพยายามที่ไม่มีความหมาย คือความพยายามทำให้คนที่อยากไป...เลือกที่จะอยู่",
+      "แก้วที่มันแตกไปแล้ว ต่อให้ติดกาวดีแค่ไหน รอยร้าวก็ยังบาดมือเราอยู่ดี",
+      "การคิดถึงคนที่ไม่เคยคิดถึงเราเลย มันก็เหมือนกับการรอเรือใบที่สนามบิน",
+      "ไม่ได้โกรธที่เธอเลือกเขา แต่โกรธตัวเองที่เคยเชื่อว่าเธอจะเลือกเรา",
+      "สุดท้ายแล้ว เราก็ต้องกลายเป็นคนแปลกหน้าที่รู้เรื่องราวของกันและกันดีที่สุด",
+      "การปล่อยมือไม่ได้แปลว่าเล็กรัก แต่แปลว่ายอมรับความจริงว่าอยู่ไปก็เจ็บ",
+      "ที่ตรงนั้นเคยเป็นของเรา แต่ในวันนี้แม้แต่เงาก็ไม่มีสิทธิ์เดินผ่าน",
+      "เจ็บที่สุดไม่ใช่ตอนบอกลา แต่เป็นตอนที่รู้ว่าไม่มีความหมายใดๆ ให้จำ",
+      "หมดเวลาสำหรับคำแก้ตัว เพราะสายตาของเธอเปลี่ยนไปนานแล้ว"
+    ];
 
-        btn.addEventListener("click", () => {
-            navigator.clipboard.writeText(box.value).then(() => {
-                popup.classList.add("show");
+    let current = -1;
 
-                setTimeout(() => {
-                    popup.classList.remove("show");
-                }, 1500);
-            });
-        });
-    </script>
+    function newQuote() {
+      const el = document.getElementById('quote');
+      el.classList.add('fade-out');
 
+      setTimeout(() => {
+        let next;
+        do { next = Math.floor(Math.random() * quotes.length); } while (next === current);
+        current = next;
+        el.textContent = `" ${quotes[current]} "`;
+        el.classList.remove('fade-out');
+        el.classList.remove('fade-in');
+        void el.offsetWidth;
+        el.classList.add('fade-in');
+        document.getElementById('counter').textContent = `แผลใจที่ ${current + 1} จาก ${quotes.length}`;
+        spawnHearts();
+      }, 400);
+    }
+
+    function spawnHearts() {
+      const bg = document.getElementById('heartsBg');
+      const emojis = ['💔','🌧️','💧','🖤','🌫️']; // เปลี่ยนเป็นไอเทมเศร้าๆ
+      for (let i = 0; i < 6; i++) {
+        const h = document.createElement('span');
+        h.className = 'heart-particle';
+        h.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        h.style.left = Math.random() * 100 + 'vw';
+        h.style.animationDuration = (3 + Math.random() * 3) + 's'; /* ตกลงมาไวกว่าเดิมเหมือนฝน */
+        h.style.animationDelay = (Math.random() * 1) + 's';
+        h.style.fontSize = (0.8 + Math.random() * 0.8) + 'rem';
+        bg.appendChild(h);
+        setTimeout(() => h.remove(), 6000);
+      }
+    }
+
+    // Init
+    newQuote();
+
+    // Ambient sadness (ฝนตกเอฟเฟกต์เบาๆ ตลอดเวลา)
+    setInterval(() => {
+      const bg = document.getElementById('heartsBg');
+      const h = document.createElement('span');
+      h.className = 'heart-particle';
+      h.textContent = ['💧','🌧️','🖤'][Math.floor(Math.random()*3)];
+      h.style.left = Math.random() * 100 + 'vw';
+      h.style.animationDuration = (5 + Math.random() * 4) + 's';
+      h.style.fontSize = '0.7rem';
+      bg.appendChild(h);
+      setTimeout(() => h.remove(), 9000);
+    }, 600);
+  </script>
 </body>
 </html>
